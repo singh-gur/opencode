@@ -4,8 +4,14 @@
   "provider": {},
   "mcp": {
     "alpha_vantage": {
+      "enabled": false,
       "type": "remote",
-      "url": "https://mcp.alphavantage.co/mcp?api_key={env:ALPHA_VANTAGE_API_KEY}",
+      "url": "https://mcp.alphavantage.co/mcp?api_key={env:ALPHA_VANTAGE_API_KEY}"
+    },
+    "av_local": {
+      "enabled": false,
+      "type": "local",
+      "command": ["uvx", "av-mcp", "{ENV:ALPHA_VANTAGE_API_KEY}"]
     }
   }
 }
