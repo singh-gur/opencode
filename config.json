@@ -11,12 +11,12 @@
     "playwright": {
       "enabled": false,
       "type": "local",
-      "command": ["uvx", "@playwright/mcp@latest"]
+      "command": ["npx", "@playwright/mcp@latest"]
     },
     "helm_afhub": {
       "enabled": false,
       "type": "local",
-      "command": ["uvx", "helm-package-readme-mcp-server"],
+      "command": ["npx", "helm-package-readme-mcp-server"],
       "environment": {
         "GITHUB_TOKEN": "{ENV:GITHUB_TOKEN}"
       }
