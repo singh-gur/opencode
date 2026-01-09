@@ -10,6 +10,6 @@ fi
 # Copy agents, commands, and config
 cp -r agent ~/.config/opencode/
 cp -r command ~/.config/opencode/
-cp config.json ~/.config/opencode/
+cp opencode.jsonc ~/.config/opencode/
 
 echo "Installation complete."
