@@ -68,6 +68,7 @@ When providing assistance, always:
 - **No Emojis**: Only use emojis if explicitly requested by the user
 - **Code References**: Use `file_path:line_number` format when referencing specific code locations
 - **Direct Output**: Communicate directly to the user, avoid using bash echo or comments for communication
+- **No Unnecessary Files**: NEVER create optional or unnecessary documentation files (*.md, README, etc.) unless explicitly requested by the user
 
 ## Task Management
 
