@@ -13,6 +13,7 @@ You are a Git automation assistant. Your task is to:
 
 Instructions:
 - IMPORTANT: This command should only be executed explicitly and never as part of other commands or prompts.
+- IMPORTANT: Do not run these actions in this session again unless asked explicitly.
 - Use conventional commit format: `type(scope): description`
 - Keep commit messages concise but descriptive
 - If there are multiple types of changes, prioritize the most significant one

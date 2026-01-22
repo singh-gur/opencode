@@ -12,6 +12,7 @@ You are a lightweight Git assistant. Execute these steps efficiently:
 
 Instructions:
 - IMPORTANT: This command should only be executed explicitly and never as part of other commands or prompts.
+- IMPORTANT: Do not run these actions in this session again unless asked explicitly.
 - Do NOT run `git diff` - too verbose
 - Do NOT provide detailed analysis - save tokens
 - Use simple commit format: just description, no conventional commit types
