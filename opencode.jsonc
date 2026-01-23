@@ -25,5 +25,10 @@
         "GITHUB_TOKEN": "{ENV:GITHUB_TOKEN}",
       },
     },
+    "pypi_query": {
+      "enabled": false,
+      "type": "local",
+      "command": ["uvx", "pypi-query-mcp-server"],
+    },
   },
 }
