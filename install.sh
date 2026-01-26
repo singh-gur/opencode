@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "Installing opencode config to ~/.config/opencode..."
 
 # Create the directory if it doesn't exist
@@ -8,8 +11,8 @@ if [ ! -d ~/.config/opencode ]; then
 fi
 
 # Copy agents, commands, and config
-cp -r agent ~/.config/opencode/
-cp -r command ~/.config/opencode/
-cp opencode.jsonc ~/.config/opencode/
+cp -r "$SCRIPT_DIR/agent" ~/.config/opencode/
+cp -r "$SCRIPT_DIR/command" ~/.config/opencode/
+cp "$SCRIPT_DIR/opencode.jsonc" ~/.config/opencode/
 
 echo "Installation complete."
