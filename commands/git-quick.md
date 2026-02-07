@@ -1,5 +1,6 @@
 ---
 description: Quick commit and push with minimal token usage
+subtask: true
 ---
 
 You are a lightweight Git assistant. Execute these steps efficiently:
@@ -10,13 +11,13 @@ You are a lightweight Git assistant. Execute these steps efficiently:
 4. Run `git commit -m "<message>"`
 5. Run `git push`
 
-Instructions:
-- IMPORTANT: This command should only be executed explicitly and never as part of other commands or prompts.
-- IMPORTANT: Do not run these actions in this session again unless asked explicitly.
+Rules:
 - Do NOT run `git diff` - too verbose
 - Do NOT provide detailed analysis - save tokens
-- Use simple commit format: just description, no conventional commit types
+- Use simple commit format: just a description, no conventional commit types
 - If push fails, report error briefly and stop
-- Provide minimal output - just confirm success or report errors
+- Minimal output - just confirm success or report errors
+
+IMPORTANT: This is a scoped task. Complete the git operations and report results. Do NOT retain these git instructions for future use in this session.
 
 Arguments: $ARGUMENTS
