@@ -9,14 +9,7 @@ echo "Installing opencode config to $TARGET_DIR..."
 # Create the target directory if it doesn't exist
 mkdir -p "$TARGET_DIR"
 
-# Copy agents, commands, skills, rules, and config
-cp -r "$SCRIPT_DIR/agents" "$TARGET_DIR/"
-cp -r "$SCRIPT_DIR/commands" "$TARGET_DIR/"
-cp -r "$SCRIPT_DIR/skills" "$TARGET_DIR/"
-cp "$SCRIPT_DIR/AGENTS.md" "$TARGET_DIR/"
-cp "$SCRIPT_DIR/opencode.jsonc" "$TARGET_DIR/"
-
-# Clean up old directory names if they exist from previous installs
+# Clean up old directory names from previous installs first
 if [ -d "$TARGET_DIR/agent" ]; then
   echo "Removing old agent/ directory..."
   rm -rf "$TARGET_DIR/agent"
@@ -25,6 +18,13 @@ if [ -d "$TARGET_DIR/command" ]; then
   echo "Removing old command/ directory..."
   rm -rf "$TARGET_DIR/command"
 fi
+
+# Copy new agents, commands, skills, rules, and config
+cp -r "$SCRIPT_DIR/agents" "$TARGET_DIR/"
+cp -r "$SCRIPT_DIR/commands" "$TARGET_DIR/"
+cp -r "$SCRIPT_DIR/skills" "$TARGET_DIR/"
+cp "$SCRIPT_DIR/AGENTS.md" "$TARGET_DIR/"
+cp "$SCRIPT_DIR/opencode.jsonc" "$TARGET_DIR/"
 
 echo "Installation complete."
 echo ""
