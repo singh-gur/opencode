@@ -4,6 +4,7 @@
     "opencode-gemini-auth",
     "opencode-anthropic-auth",
     "opencode-openai-codex-auth",
+    "opencode-ignore",
   ],
   "provider": {},
   "mcp": {
