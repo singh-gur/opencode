@@ -5,6 +5,7 @@
     "opencode-anthropic-auth",
     "opencode-openai-codex-auth",
     "opencode-ignore",
+    "octto",
   ],
   "provider": {},
   "mcp": {
