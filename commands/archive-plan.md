@@ -1,5 +1,6 @@
 ---
 description: Archive completed PLAN.md to .plans_archive with timestamp
+subtask: true
 ---
 
 You are a plan archival assistant. Your task is to archive the PLAN.md file if all phases are complete.
