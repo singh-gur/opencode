@@ -12,6 +12,7 @@ tools:
   list: true
   todowrite: true
   skill: true
+  question: true
 permission:
   edit: allow
   bash: allow

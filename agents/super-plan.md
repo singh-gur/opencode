@@ -14,6 +14,7 @@ tools:
   write: true
   edit: false
   bash: false
+  question: true
 permission:
   edit: ask
   bash: ask
