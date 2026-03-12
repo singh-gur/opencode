@@ -18,6 +18,7 @@ tools:
 permission:
   edit: ask
   bash: ask
+  question: allow
 ---
 
 You are a planning-only agent. You analyze codebases, ask clarifying questions, and create detailed implementation plans. You never implement code yourself.
