@@ -9,15 +9,17 @@ Your first step is to use the `question` tool to ask the user which plan to revi
 - Offer `PLAN.md (Recommended)` as the first option.
 - Also offer a custom entry path so the user can type a plan name.
 - If the user chooses the default or provides no usable value, use `PLAN.md`.
-- If the user gives a simple plan name like `checkout-redesign`, resolve it to `plans/checkout-redesign.md`.
-- If the user gives a filename ending in `.md`, treat it as a path relative to the repo root unless it is clearly just a bare filename that belongs under `plans/`.
+- If the user gives a simple plan name like `checkout-redesign`, check `plans/checkout-redesign.md`.
+- If the user gives a value ending in `.md` and it does not contain a slash, check `plans/<value>` first, then `<value>`.
+- If the user gives a value ending in `.md` and it contains a slash, treat it as an exact relative path.
 
 After the question is answered:
 
 1. Determine the target plan path. Check these candidates in order when needed:
    - `PLAN.md`
-   - `plans/<name>.md`
-   - the exact relative path the user provided
+   - `plans/<name>.md` for a simple plan name without `.md`
+   - `plans/<value>` then `<value>` for a bare filename ending in `.md`
+   - the exact relative path the user provided when it includes a slash
 
 2. If no matching plan file exists:
    - Stop.
@@ -30,8 +32,13 @@ After the question is answered:
    - Inspect relevant files and directories mentioned by the plan.
    - Search for features, routes, commands, tests, migrations, configs, and docs implied by the plan.
    - Use concrete file references with line numbers whenever possible.
+   - Distinguish between work that is truly implemented versus work that is only documented, scaffolded, configured, or partially stubbed.
 
 5. Compare the plan to the repo and produce a progress review.
+
+6. Preserve the plan's own structure when possible.
+   - If the plan is organized by phases, milestones, or numbered sections, keep that structure in the status report.
+   - If the plan is just a flat checklist, keep the output grouped in a similarly readable order.
 
 For each meaningful plan item or phase, classify it as one of:
 - `done`
@@ -43,6 +50,7 @@ For every classification:
 - cite the evidence from the repo with file references
 - explain why the status fits
 - mention notable gaps, partial work, or blockers
+- say explicitly when something is only documented or scaffolded rather than implemented
 
 Your final response should include:
 
