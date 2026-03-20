@@ -2,6 +2,10 @@
 
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Pull latest changes from git
+git -C "$SCRIPT_DIR" pull || echo "Warning: git pull failed, continuing with installation..."
+
 TARGET_DIR="$HOME/.config/opencode"
 
 echo "Installing opencode config to $TARGET_DIR..."
