@@ -24,6 +24,12 @@ These rules apply to all agents and sessions.
 - **Task Tool**: For complex exploration or multi-step research, delegate to the Task tool with an appropriate subagent
 - **Read Before Modify**: Always read files before editing or overwriting them
 
+## Security & Sensitive Data
+
+- **Never Access Kubernetes Secrets**: Do not read, fetch, decode, or inspect secrets from Kubernetes clusters using `kubectl` or any other method.
+- **Never Access Sensitive Local Data**: Do not read or expose sensitive values from local files or configs, including but not limited to `.env`, `.env.*`, kubeconfig files, system configuration files, credential stores, SSH keys, or cloud auth files.
+- **Use User-Provided Values Only**: If a task requires a secret or sensitive value, ask the user to provide a sanitized placeholder instead of retrieving it directly.
+
 ## Task Management
 
 - **Use TodoWrite** for complex multi-step tasks (3+ steps) to plan and track progress
