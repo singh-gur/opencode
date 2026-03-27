@@ -109,6 +109,8 @@ cp -r "$SCRIPT_DIR/skills" "$TARGET_DIR/"
 cp "$SCRIPT_DIR/AGENTS.md" "$TARGET_DIR/"
 cp "$SCRIPT_DIR/opencode.jsonc" "$TARGET_DIR/"
 
+"$SCRIPT_DIR/scripts/install-external-skills.sh" || exit 1
+
 echo "Installation complete."
 echo ""
 echo "Installed:"

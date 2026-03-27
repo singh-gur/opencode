@@ -1,0 +1,5 @@
+{
+  "https://github.com/anthropics/skills": ["frontend-design"],
+  "https://github.com/vercel-labs/skills": ["find-skills"],
+  "https://github.com/vercel-labs/agent-browser": ["agent-browser"]
+}
