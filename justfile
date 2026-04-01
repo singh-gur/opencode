@@ -8,6 +8,11 @@ default:
 install-skills:
     ./scripts/install-external-skills.sh
 
-# Run the main installer for local config plus external skills.
+# Run the main installer for local config only.
 install:
     ./install.sh
+
+# Run both the local installer and external skills installer.
+install-all:
+    ./install.sh
+    ./scripts/install-external-skills.sh
