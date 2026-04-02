@@ -44,3 +44,17 @@ These rules apply to all agents and sessions.
 - Consider edge cases and failure scenarios
 - Optimize for readability first, performance when necessary
 - Implement comprehensive error handling and logging
+
+## Repo-Scoped AGENTS Sync
+
+- If working inside another repository that has its own repo-scoped `AGENTS.md`, treat that file as part of the maintained codebase and keep it aligned with meaningful workflow, policy, command, tooling, or expectation changes made during the session.
+- Check whether the repo-scoped `AGENTS.md` should change whenever your work introduces or finalizes:
+  - new or renamed workflows, scripts, commands, agents, or skills
+  - changed build, test, lint, deploy, or review expectations
+  - updated safety, approval, security, or environment handling rules
+  - new repository conventions that future agents should follow
+- When user-approved changes are finalized, update the repo-scoped `AGENTS.md` in the same unit of work if the instructions would otherwise become stale, misleading, or incomplete.
+- Prefer updating the repo-scoped `AGENTS.md` before wrapping up the task, rather than leaving follow-up documentation drift for later.
+- Treat repo-scoped `AGENTS.md` updates like normal documentation edits: read before modifying, keep changes minimal, preserve the file's structure and tone, and do not change unrelated guidance.
+- Do not make speculative policy edits. Only document behavior, constraints, and workflows that are actually present in the repository after the finalized changes.
+- If no repo-scoped `AGENTS.md` exists, do not create one unless the user explicitly asks for it.
