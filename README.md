@@ -2,7 +2,7 @@
 
 Personal `opencode` configuration bundle for installing custom agents, slash commands, skills, and base config into `~/.config/opencode`.
 
-This repository is not an application in the usual sense. It is a curated config pack for an `opencode` CLI setup, with an installer that syncs local assets and optionally installs a small set of external skills.
+This repository is not an application in the usual sense. It is a curated config pack for an `opencode` CLI setup, with a local installer for syncing repo-managed assets plus a separate external-skill install flow.
 
 ## What This Repo Contains
 
@@ -10,7 +10,7 @@ This repository is not an application in the usual sense. It is a curated config
 - **Primary agents** in `agents/`:
   - `ask` - read-only exploration and reasoning agent
   - `super-plan` - planning-only agent that writes phase-based implementation plans
-- **Reusable commands** in `commands/` for plan review/archive, git workflows, bug reporting, security scanning, and repo-to-prompt generation.
+- **Reusable commands** in `commands/` for plan review/archive, git workflows, bug reporting, security scanning, Helm chart auditing, and repo-to-prompt generation.
 - **Local skills** in `skills/` for domain-specific engineering help:
   - `ai-engineering`
   - `frontend-dev`
@@ -40,7 +40,7 @@ It also removes legacy install paths if they exist:
 - `~/.config/opencode/agent`
 - `~/.config/opencode/command`
 
-After copying local files, the installer runs `scripts/install-external-skills.sh`, which reads `skills-install.json` and installs configured external skills with `npx skills add ... -g --agent opencode -y`.
+External skills are installed separately through `scripts/install-external-skills.sh`, which reads `skills-install.json` and installs configured skills with `npx skills add ... -g --agent opencode -y`.
 
 ## Repository Layout
 
@@ -91,6 +91,7 @@ The `commands/` directory provides focused slash-command style workflows:
 - `git-cap.md` - full git review, commit, and push flow
 - `git-quick.md` - lightweight low-token git commit/push flow
 - `git-safe.md` - proposal-only git flow that waits for approval before writes
+- `helm_audit.md` - Helm and Argo/Flux-oriented repo security audit workflow with chart-version risk checks
 - `plan-progress.md` - compare repo state against an implementation plan
 - `security-scan.md` - structured security review workflow
 
@@ -155,7 +156,7 @@ Optional but recommended:
 
 ## Installation
 
-### Quick Start
+### Local Config Only
 
 ```bash
 just install
@@ -165,6 +166,12 @@ If you do not use `just`:
 
 ```bash
 ./install.sh
+```
+
+### Local Config Plus External Skills
+
+```bash
+just install-all
 ```
 
 ### Install Only External Skills
@@ -186,6 +193,7 @@ The repository currently exposes:
 ```text
 default
 install
+install-all
 install-skills
 ```
 
@@ -199,14 +207,20 @@ install-skills
 4. Creates `~/.config/opencode` if needed.
 5. Removes old `agent/` and `command/` directories from earlier layouts.
 6. Copies local config assets into `~/.config/opencode`.
-7. Runs external skill installation.
-8. Prints a concise summary of what was installed.
+7. Prints a concise summary of what was installed.
+
+`scripts/install-external-skills.sh` performs the external skill flow separately:
+
+1. Reads `skills-install.json`.
+2. Validates the config shape with `jq`.
+3. Installs each configured external skill via `npx skills add`.
+4. Reports attempted, successful, and failed installs.
 
 ## Development Notes
 
 - This repo is mostly content-driven; changes are usually edits to markdown prompts or config.
 - The install scripts are written defensively and continue through some non-fatal failures, especially around optional external skill installation.
-- Recent commit history suggests the repo evolves around install improvements and agent/command prompt refinements rather than compiled application code.
+- Recent changes include a dedicated `helm_audit` command and a split between local config install and external skill install workflows.
 
 ## Customization
 
