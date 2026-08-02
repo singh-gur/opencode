@@ -4,38 +4,61 @@ These rules apply to all agents and sessions.
 
 ## Communication Style
 
-- **Concise & Professional**: Keep responses short and to the point - this is a CLI interface
+- **Concise & Professional**: Keep responses short and to the point since this is a CLI interface
 - **No Emojis**: Only use emojis if explicitly requested
 - **Code References**: Use `file_path:line_number` format when referencing code (e.g., `src/main.py:78`)
-- **Direct Output**: Communicate directly to the user; never use bash echo or comments for communication
-- **Markdown**: Use Github-flavored markdown for formatting
-- **No Unnecessary Files**: Never create documentation files (*.md, README, etc.) unless explicitly requested
+- **Direct Output**: Communicate directly to the user; never use bash output or code comments as a substitute for user-facing communication
+- **Markdown**: Use GitHub-flavored markdown for formatting
+- **No Unnecessary Files**: Never create documentation files like `README.md` or other `*.md` files unless explicitly requested
 
 ## Tool Usage
 
+- **Use Built-in Tools First**: Prefer opencode's built-in tools over shell workarounds whenever the needed tool is available
+- **Read Before Modify**: Always use `read` to inspect a file before editing or overwriting it
+- **Use `edit` for Precise Changes**: Prefer `edit` for targeted modifications to existing files
+- **Use `write` Only for New Files or Full Rewrites**: Do not use `write` for small in-place changes
+- **Use `grep` and `glob` for Discovery**: Prefer `grep` for content search and `glob` for finding files over running `grep`/`rg`/`find`/`ls` via `bash`
+- **Use `bash` for Execution**: Use `bash` for build/test commands, git commands, package managers, and other shell workflows
+- **Task Tool**: For complex exploration or multi-step research, delegate to the `task` tool with an appropriate subagent
+- **Keep Edits Precise**: Make the smallest reasonable change that satisfies the request
+- **Keep Replacements Minimal**: Make `edit` replacements as small as possible while still being unique and safe
 - **Parallel Calls**: When making multiple independent tool calls, invoke them in parallel in a single message
 - **Sequential Only When Needed**: Chain bash commands with `&&` only when operations depend on each other
-- **Prefer Specialized Tools**:
-  - Read instead of cat/head/tail
-  - Edit instead of sed/awk
-  - Write instead of echo/cat heredoc
-  - Glob instead of find/ls
-  - Grep instead of grep/rg
-- **Task Tool**: For complex exploration or multi-step research, delegate to the Task tool with an appropriate subagent
-- **Read Before Modify**: Always read files before editing or overwriting them
+- **Ask When Blocked**: Use the `question` tool for a focused decision when blocked after inspecting what can be inspected, not for status updates
 
 ## Security & Sensitive Data
 
-- **Never Access Kubernetes Secrets**: Do not read, fetch, decode, or inspect secrets from Kubernetes clusters using `kubectl` or any other method.
-- **Never Access Sensitive Local Data**: Do not read or expose sensitive values from local files or configs, including but not limited to `.env`, `.env.*`, kubeconfig files, system configuration files, credential stores, SSH keys, or cloud auth files.
-- **Use User-Provided Values Only**: If a task requires a secret or sensitive value, ask the user to provide a sanitized placeholder instead of retrieving it directly.
+- **Never Access Kubernetes Secrets**: Do not read, fetch, decode, or inspect secrets from Kubernetes clusters using `kubectl` or any other method
+- **Never Access Sensitive Local Data**: Do not read or expose sensitive values from local files or configs, including but not limited to `.env`, `.env.*`, kubeconfig files, system configuration files, credential stores, SSH keys, or cloud auth files
+- **Use User-Provided Values Only**: If a task requires a secret or sensitive value, ask the user to provide a sanitized placeholder instead of retrieving it directly
+- **Keep Machine-Specific Auth Local**: Do not modify or sync machine-specific auth/session state unless the user explicitly asks
 
 ## Task Management
 
-- **Use TodoWrite** for complex multi-step tasks (3+ steps) to plan and track progress
+- **Use `todowrite`** for complex multi-step tasks (3+ steps) to plan and track progress
 - **Immediate Updates**: Mark todos as completed immediately after finishing each task
 - **Single Focus**: Only have ONE todo in_progress at a time
-- **Skip for Simple Tasks**: Don't use TodoWrite for single straightforward tasks
+- **Skip for Simple Tasks**: Don't use `todowrite` for single straightforward tasks
+- Give concise progress updates during longer tasks
+
+## Project Automation
+
+- Prefer adding a `justfile` to repositories or projects where it can provide useful, repeatable workflows
+- When creating a `justfile`, include usage details for tasks and add a default task that lists available `just` tasks
+
+## Dependency Management
+
+- Use the project's package manager to add, update, or remove dependencies instead of editing manifest files directly
+- For Python projects, prefer commands like `uv add`, `uv remove`, or the project's configured dependency workflow rather than manually editing `pyproject.toml`
+- For Node.js projects, prefer commands like `pnpm add`, `pnpm remove`, `npm install`, `yarn add`, or `bun add` according to the project's existing lockfile and tooling rather than manually editing `package.json`
+- Preserve and update lockfiles through the package manager so dependency versions stay resolved and reproducible
+- Only edit dependency manifest files directly when the package manager cannot express the needed change, and explain why
+
+## Documentation & Usage Accuracy
+
+- When building with or advising on specs, interfaces, CLI tools, APIs, frameworks, or libraries, verify expected usage against available documentation, schemas, source definitions, or built-in help text before making assumptions
+- Prefer project-local docs and installed version help first, then official upstream documentation (via `webfetch`/`websearch`) when local sources are insufficient
+- When exact behavior is uncertain or docs are unavailable, state the uncertainty, ask the user for clarification or source material when needed, and avoid presenting guesses as facts
 
 ## Code Quality
 
@@ -43,18 +66,25 @@ These rules apply to all agents and sessions.
 - Analyze requirements thoroughly before implementing
 - Consider edge cases and failure scenarios
 - Optimize for readability first, performance when necessary
-- Implement comprehensive error handling and logging
+- Implement appropriate error handling and logging
+- Preserve existing style unless asked to refactor
+
+## Bug Fixes
+
+- When working on bug fixes, focus only on fixing the reported bug and keep changes limited to the smallest safe scope
+- Avoid broad rewrites, unrelated refactors, or opportunistic cleanup while fixing bugs
+- If a larger rewrite or wider change is absolutely necessary to fix the bug, explain why, outline the intended changes, and ask the user for approval before proceeding
 
 ## Repo-Scoped AGENTS Sync
 
-- If working inside another repository that has its own repo-scoped `AGENTS.md`, treat that file as part of the maintained codebase and keep it aligned with meaningful workflow, policy, command, tooling, or expectation changes made during the session.
+- If working inside another repository that has its own repo-scoped `AGENTS.md`, treat that file as part of the maintained codebase and keep it aligned with meaningful workflow, policy, command, tooling, or expectation changes made during the session
 - Check whether the repo-scoped `AGENTS.md` should change whenever your work introduces or finalizes:
   - new or renamed workflows, scripts, commands, agents, or skills
   - changed build, test, lint, deploy, or review expectations
   - updated safety, approval, security, or environment handling rules
   - new repository conventions that future agents should follow
-- When user-approved changes are finalized, update the repo-scoped `AGENTS.md` in the same unit of work if the instructions would otherwise become stale, misleading, or incomplete.
-- Prefer updating the repo-scoped `AGENTS.md` before wrapping up the task, rather than leaving follow-up documentation drift for later.
-- Treat repo-scoped `AGENTS.md` updates like normal documentation edits: read before modifying, keep changes minimal, preserve the file's structure and tone, and do not change unrelated guidance.
-- Do not make speculative policy edits. Only document behavior, constraints, and workflows that are actually present in the repository after the finalized changes.
-- If no repo-scoped `AGENTS.md` exists, do not create one unless the user explicitly asks for it.
+- When user-approved changes are finalized, update the repo-scoped `AGENTS.md` in the same unit of work if the instructions would otherwise become stale, misleading, or incomplete
+- Prefer updating the repo-scoped `AGENTS.md` before wrapping up the task, rather than leaving follow-up documentation drift for later
+- Treat repo-scoped `AGENTS.md` updates like normal documentation edits: read before modifying, keep changes minimal, preserve the file's structure and tone, and do not change unrelated guidance
+- Do not make speculative policy edits. Only document behavior, constraints, and workflows that are actually present in the repository after the finalized changes
+- If no repo-scoped `AGENTS.md` exists, do not create one unless the user explicitly asks for it
