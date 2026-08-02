@@ -84,8 +84,6 @@ AGENT_COUNT="$(count_markdown_files "$SCRIPT_DIR/agents")"
 AGENT_NAMES="$(list_markdown_basenames "$SCRIPT_DIR/agents")"
 COMMAND_COUNT="$(count_markdown_files "$SCRIPT_DIR/commands")"
 COMMAND_NAMES="$(list_markdown_basenames "$SCRIPT_DIR/commands")"
-SKILL_COUNT="$(count_subdirs "$SCRIPT_DIR/skills")"
-SKILL_NAMES="$(list_subdir_basenames "$SCRIPT_DIR/skills")"
 
 echo "Installing opencode config to $TARGET_DIR..."
 
@@ -102,10 +100,9 @@ if [ -d "$TARGET_DIR/command" ]; then
   rm -rf "$TARGET_DIR/command"
 fi
 
-# Copy new agents, commands, skills, rules, and config
+# Copy new agents, commands, rules, and config
 cp -r "$SCRIPT_DIR/agents" "$TARGET_DIR/"
 cp -r "$SCRIPT_DIR/commands" "$TARGET_DIR/"
-cp -r "$SCRIPT_DIR/skills" "$TARGET_DIR/"
 cp "$SCRIPT_DIR/AGENTS.md" "$TARGET_DIR/"
 cp "$SCRIPT_DIR/opencode.jsonc" "$TARGET_DIR/"
 
@@ -114,6 +111,5 @@ echo ""
 echo "Installed:"
 echo "  - $AGENT_COUNT agents ($AGENT_NAMES)"
 echo "  - $COMMAND_COUNT commands ($COMMAND_NAMES)"
-echo "  - $SKILL_COUNT skills ($SKILL_NAMES)"
 echo "  - Global rules (AGENTS.md)"
 echo "  - Config (opencode.jsonc)"

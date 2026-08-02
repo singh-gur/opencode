@@ -1,36 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "opencode-gemini-auth",
-    "opencode-anthropic-auth",
     "opencode-openai-codex-auth",
-    "opencode-ignore",
-    // "@spoons-and-mirrors/subtask2@latest",
+    "opencode-ignore"
   ],
-  "provider": {},
-  "mcp": {
-    "av_local": {
-      "enabled": false,
-      "type": "local",
-      "command": ["uvx", "av-mcp", "{ENV:ALPHA_VANTAGE_API_KEY}"],
-    },
-    "playwright": {
-      "enabled": false,
-      "type": "local",
-      "command": ["npx", "@playwright/mcp@latest"],
-    },
-    "helm_afhub": {
-      "enabled": false,
-      "type": "local",
-      "command": ["npx", "helm-package-readme-mcp-server"],
-      "environment": {
-        "GITHUB_TOKEN": "{ENV:GITHUB_TOKEN}",
-      },
-    },
-    "pypi_query": {
-      "enabled": false,
-      "type": "local",
-      "command": ["uvx", "pypi-query-mcp-server"],
-    },
-  },
+  "provider": {}
 }
